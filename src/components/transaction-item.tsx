@@ -10,6 +10,9 @@ import { useToast } from './ui/use-toast';
 
 export function TransactionItem({ transaction }: { transaction: Transaction }) {
     const sign = transaction.amount < 0 ? '-' : '+';
+    const date = new Date(transaction.createdAt).toLocaleDateString();
+    // get time in 12 hour format
+    const time = new Date(transaction.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     const { toast } = useToast()
     async function handleDelete(transactionId: string) {
         const confirmed = window.confirm('Are you sure you want to delete this transaction?');
@@ -21,16 +24,17 @@ export function TransactionItem({ transaction }: { transaction: Transaction }) {
     return (
         <Card className="p-4 w-full">
             <CardTitle className='mb-2'>{transaction.text}</CardTitle>
-            <CardDescription className='flex justify-between items-center'>
-                <span>
+            <CardDescription >
+                <span>{date}, {time}</span>
+                <div className='flex justify-between items-center'><span>
                     {sign}${addCommas(Number(Math.abs(transaction.amount)?.toFixed(2) ?? 0))}
                 </span>
-                <Button variant='destructive'
-                    size="icon"
-                    onClick={() => handleDelete(transaction.id)}
-                >
-                    <X className='w-4 h-4' />
-                </Button>
+                    <Button variant='destructive'
+                        size="icon"
+                        onClick={() => handleDelete(transaction.id)}
+                    >
+                        <X className='w-4 h-4' />
+                    </Button></div>
             </CardDescription>
         </Card>
     );
