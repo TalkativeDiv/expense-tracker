@@ -27,7 +27,7 @@ export async function MainNav({ items }: MainNavProps) {
             <span className="inline-block font-bold">Expense Tracker</span>
           </Link>
         </div>
-        <div className="flex gap-2 align-center justify-center">
+        <div className="flex gap-4 items-center justify-center">
           <div>
             <SignedIn>
               <UserButton />
